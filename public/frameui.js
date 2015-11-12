@@ -189,6 +189,7 @@ function TrackFrameUI(newfrmbtn, framectr, player, kbDisabled) {
         $("#timeline-frm" + id).append("<div id='slider-range" + id + "' class='ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all'></div>");
 	$("#startframe" + id).button("option", "disabled", false);
         $("#stopframe" + id).button("option", "disabled", true);
+        player.resetFrameInfo(id);
     };
 
     this.deleteFrame = function(id) {
@@ -209,6 +210,7 @@ function TrackFrameUI(newfrmbtn, framectr, player, kbDisabled) {
         
         this.intervalsList.splice(id, 1);
         this.n--;
+        player.removeFrameInfo(id)
     };
 
     this.saveData = function() {
@@ -257,10 +259,11 @@ function TrackFrameUI(newfrmbtn, framectr, player, kbDisabled) {
         return true;
     };
 
-    this.loadData = function(jobid) {
+    this.loadData = function(player) {
         console.log("loading data");
 
         var labels, labelName;
+        var jobid = player.job.jobid;
 
         $.ajax({
             type: "POST",
@@ -280,6 +283,7 @@ function TrackFrameUI(newfrmbtn, framectr, player, kbDisabled) {
                     self.intervalsList[idx] = deserialize(JSON.parse(label));
                     $("#labelname-frm" + idx).val(labelName[idx]);       
                     self.updateTimeline(idx);
+                    player.updateFrameInfo(self.intervalsList[idx], $("#labelname-frm" + idx).val(), idx);
                 });
 
                 console.log("data loaded");
@@ -287,7 +291,7 @@ function TrackFrameUI(newfrmbtn, framectr, player, kbDisabled) {
         });
     };
 
-    this.loadData(player.job.jobid);
+    this.loadData(player);
 }
 
 var serialize = function(intervals, jobLen) {

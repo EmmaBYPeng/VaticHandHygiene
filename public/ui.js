@@ -4,11 +4,12 @@ var kbDisabled = [false];
 function ui_build(job)
 {
     console.log(job);
-    var screen = ui_setup(job);
+    var fps = 10;
+    var screen = ui_setup(job, fps);
     var videoframe_fs = $("#videoframe-fs");
     var videoframe_rgb = $("#videoframe-rgb");
     var videoframe_d = $("#videoframe-d");
-    var player = new VideoPlayer(videoframe_fs, videoframe_rgb, videoframe_d, job);
+    var player = new VideoPlayer(videoframe_fs, videoframe_rgb, videoframe_d, job, 10);
     var tracks = new TrackCollection(player, job);
     var objectui = new TrackObjectUI($("#newobjbtn"), $("#objectcontainer"), videoframe_rgb, job, player, tracks);
     var frameui = new TrackFrameUI($("#newfrmbtn"), $("#ctr-frm"), player, kbDisabled);
@@ -28,7 +29,7 @@ function ui_build(job)
     });
 }
 
-function ui_setup(job)
+function ui_setup(job, fps)
 {
     var screen = $("<div id='annotatescreen' style='display: table'></div>").appendTo(container);
 
@@ -113,16 +114,16 @@ function ui_setup(job)
     $("#advancedoptions").append(
     "<div id='speedcontrol'>" +
     "<input type='radio' name='speedcontrol' " +
-        "value='5,1' id='speedcontrolslower'>" +
+        "value='" + Math.round(fps*0.25) + ",1' id='speedcontrolslower'>" +
     "<label for='speedcontrolslower'>Slower</label>" +
     "<input type='radio' name='speedcontrol' " +
-        "value='10,1' id='speedcontrolslow'>" +
+        "value='" + Math.round(fps*0.5) + ",1' id='speedcontrolslow'>" +
     "<label for='speedcontrolslow'>Slow</label>" +
     "<input type='radio' name='speedcontrol' " +
-        "value='15,1' id='speedcontrolnorm' checked='checked'>" +
+        "value='" + Math.round(fps) + ",1' id='speedcontrolnorm' checked='checked'>" +
     "<label for='speedcontrolnorm'>Normal</label>" +
     "<input type='radio' name='speedcontrol' " +
-        "value='30,1' id='speedcontrolfast'>" +
+        "value='" + Math.round(fps*2) + ",1' id='speedcontrolfast'>" +    
     "<label for='speedcontrolfast'>Fast</label>" +
     "</div>");
 

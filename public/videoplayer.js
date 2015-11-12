@@ -3,37 +3,37 @@
  *                   function (x) { return "/images/" + x + ".jpg"; });
  * videoplayer.play();
  */
-    function VideoPlayer(handle_fs, handle_rgb, handle_d, job)
-    {
-        var me = this;
+function VideoPlayer(handle_fs, handle_rgb, handle_d, job, fps)
+{
+    var me = this;
 
-	this.handle = handle_rgb;
-        this.handle_fs = handle_fs;
-        this.handle_d = handle_d;
-        this.job = job;
-	this.frame = job.start;
-        this.paused = true;
-        this.fps = 10;
-        this.playdelta = 1;
+    this.handle = handle_rgb;
+    this.handle_fs = handle_fs;
+    this.handle_d = handle_d;
+    this.job = job;
+    this.frame = job.start;
+    this.paused = true;
+    this.fps = fps;
+    this.playdelta = 1;
 
-        this.intervalsList = [];
-        this.labelNameList = [];
+    this.intervalsList = [];
+    this.labelNameList = [];
 
-        this.onplay = []; 
-        this.onpause = []; 
-        this.onupdate = [];
+    this.onplay = []; 
+    this.onpause = []; 
+    this.onupdate = [];
 
-        this.handle.parent().after("<div id='frameinfo'>" + 
-                                       "<div id='curframe'>Current frame: 0</div>" +
-                                       "<div id='timer'>Elapsed time: 0 s</div>" +
-                                    "</div>");
+    this.handle.parent().after("<div id='frameinfo'>" + 
+                                   "<div id='curframe'>Current frame: 0</div>" +
+                                   "<div id='timer'>Elapsed time: 0 s</div>" +
+                               "</div>");
 
-        this.handle.append("<div id='frametag'></div>");
+    this.handle.append("<div id='frametag'></div>");
 
-        /*
-         * Toggles playing the video. If playing, pauses. If paused, plays.
-         */
-        this.toggle = function()
+    /*
+     * Toggles playing the video. If playing, pauses. If paused, plays.
+     */
+    this.toggle = function()
         {
             if (this.paused)
         {
@@ -109,6 +109,16 @@
         if (labelName !== undefined)
             this.labelNameList[id] = labelName;
     }
+
+    this.resetFrameInfo = function(id) {
+        this.intervalsList[id] = undefined;
+        this.labelNameList[id] = undefined;
+    }   
+
+    this.removeFrameInfo = function(id) {
+        this.intervalsList.splice(id, 1);
+        this.labelNameList.splice(id, 1);
+    }
  
     /*
      * Updates the current frame. Call whenever the frame changes.
@@ -131,6 +141,10 @@
         var curFrame = this.frame - this.job.start;
 
         for (i = 0; i < this.intervalsList.length; i++) {
+            if (this.labelNameList[i] === undefined) {
+                console.assert(this.intervalsList[i] === undefined);
+                continue;
+            }
             for (j = 0; j < this.intervalsList[i].length; j++) {
                 if (curFrame >= this.intervalsList[i][j].startValue && curFrame <= this.intervalsList[i][j].endValue) {
                     $("#frametagtextbox").append("<div id='frametagtext'>" + this.labelNameList[i] + "</div>");
