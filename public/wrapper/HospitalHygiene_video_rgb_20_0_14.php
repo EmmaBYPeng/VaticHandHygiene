@@ -14,7 +14,7 @@
           type: 'POST',
           url: '../access/access_server.php',
           async: false,
-          data: {page_id:'83'} // IMPORTANT: page_id must match the id specified in hits.html
+          data: {page_id:'62'} // IMPORTANT: page_id must match the id specified in hits.html
         });
       });
     </script>
@@ -23,7 +23,7 @@
   <div class='main'>
     <h2>IMPORTANT:</h2>
     <p>Please do not close this page until you finish annotating the video!</p><br>
-    <a href='http://navi.stanford.edu/?id=1014&hitId=offline' target='_blank'>Go to video</a>
+    <a href='http://navi.stanford.edu/?id=2543&hitId=offline' target='_blank'>Go to video</a>
   </div>
   </body>
 </html>

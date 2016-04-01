@@ -1,4 +1,4 @@
-function TrackObjectUI(button, container, videoframe, job, player, tracks)
+function TrackObjectUI(button, container, videoframe, job, player, tracks, kbDisabled)
 {
     var me = this;
 
@@ -359,6 +359,16 @@ function TrackObject(job, player, container, color)
         this.track.label = labelid;
 
         this.headerdetails = $("<div style='float:right;'></div>").appendTo(this.handle);
+        //console.log(labelid, this.id, this.label, this.job.labels[this.label]);
+        //this.header = $("<input id='trackobjectheader" + this.id + "' value='Object " + (this.id + 1) + "' type='text'></input>").appendTo(this.handle).hide().slideDown();
+        $("#trackobjectheader" + this.id).focusin(function() {
+            kbDisabled[0] = true;
+            console.log("focus in");
+        });
+         $("#trackobjectheader" + this.id).focusout(function() {
+            kbDisabled[0] = false;
+            console.log("focus out");
+        });
         this.header = $("<p class='trackobjectheader'><strong>" + this.job.labels[this.label] + " " + (this.id + 1) + "</strong></p>").appendTo(this.handle).hide().slideDown();
         //this.opencloseicon = $('<div class="ui-icon ui-icon-triangle-1-e"></div>').prependTo(this.header);
         this.details = $("<div class='trackobjectdetails'></div>").appendTo(this.handle).hide();

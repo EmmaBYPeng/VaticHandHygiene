@@ -86,6 +86,7 @@ function TrackFrameUI(newfrmbtn, framectr, player, kbDisabled) {
         });
         
         $("#labelname-frm" + id).focusout(function() {
+            kbDisabled[0] = false;
             var id = parseInt(this.id.slice("labelname-frm".length)); 
             player.updateFrameInfo(undefined, $("#labelname-frm" + id).val(), id);
             console.log("focus out");

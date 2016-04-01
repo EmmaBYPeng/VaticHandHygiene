@@ -14,6 +14,7 @@ labelName = "HospitalHygiene"
 vidFps = 10;
 vidLen = vidFps * 20;
 vidTypes = {'rgb', 'd', 'fs'}
+# vidTypes = {'rgb'}
 
 generateHits = True;
 
@@ -64,9 +65,9 @@ if generateHits:
       indexVid += 1
   
       print video['names']
-      print video['ids']
+      print video['ids'] # used as page id later
 
-    existingHits = sorted(hits)
+      existingHits += sorted(newHits)
 
 #write old hits file
 f = open(oldHitsFile, 'w')
@@ -79,14 +80,14 @@ PATH = os.path.dirname(os.path.abspath(__file__))
 env = Environment(loader = FileSystemLoader(PATH))
 
 #write wrap label hits html
-vidWrapperTemplate = env.get_template('/public/wrapper/videoWrapperTemplate.html')
+vidWrapperTemplate = env.get_template('/public/wrapper/videoWrapperTemplate.php')
 context = {'vidSets': vidSets}
-wrapperFile = '%s/%s_wrapper.html' %(wrapperDir, labelName)
+wrapperFile = '%s/%s_wrapper.php' %(wrapperDir, labelName)
 with open(wrapperFile, 'w') as f:
   html = vidWrapperTemplate.render(context)
   f.write(html)
 
-#write a wrapper html for each video
+#write a wrapper html for each video -- NOT USED!
 wrapperTemplate = env.get_template('/public/wrapper/wrapperTemplate.php')
 for video in vidSets:
   i = 0

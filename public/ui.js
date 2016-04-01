@@ -11,7 +11,7 @@ function ui_build(job)
     var videoframe_d = $("#videoframe-d");
     var player = new VideoPlayer(videoframe_fs, videoframe_rgb, videoframe_d, job, 10);
     var tracks = new TrackCollection(player, job);
-    var objectui = new TrackObjectUI($("#newobjbtn"), $("#objectcontainer"), videoframe_rgb, job, player, tracks);
+    var objectui = new TrackObjectUI($("#newobjbtn"), $("#objectcontainer"), videoframe_rgb, job, player, tracks, kbDisabled);
     var frameui = new TrackFrameUI($("#newfrmbtn"), $("#ctr-frm"), player, kbDisabled);
 
     ui_setupbuttons(job, player, tracks);

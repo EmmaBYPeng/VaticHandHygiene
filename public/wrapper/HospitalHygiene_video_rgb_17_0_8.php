@@ -23,7 +23,7 @@
   <div class='main'>
     <h2>IMPORTANT:</h2>
     <p>Please do not close this page until you finish annotating the video!</p><br>
-    <a href='http://navi.stanford.edu/?id=993&hitId=offline' target='_blank'>Go to video</a>
+    <a href='http://navi.stanford.edu/?id=2489&hitId=offline' target='_blank'>Go to video</a>
   </div>
   </body>
 </html>
